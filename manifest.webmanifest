@@ -1,0 +1,18 @@
+{
+  "name": "极简目标日记",
+  "short_name": "目标日记",
+  "description": "用年度目标、今日任务和简短复盘记录每天。",
+  "start_url": "./",
+  "scope": "./",
+  "display": "standalone",
+  "background_color": "#f3eee4",
+  "theme_color": "#f3eee4",
+  "icons": [
+    {
+      "src": "./icon.svg",
+      "sizes": "any",
+      "type": "image/svg+xml",
+      "purpose": "any maskable"
+    }
+  ]
+}

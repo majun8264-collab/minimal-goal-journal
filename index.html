@@ -1,0 +1,86 @@
+<!doctype html>
+<html lang="zh-CN">
+  <head>
+    <meta charset="UTF-8" />
+    <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+    <title>极简目标日记</title>
+    <meta name="theme-color" content="#f3eee4" />
+    <link rel="manifest" href="./manifest.webmanifest" />
+    <link rel="stylesheet" href="./styles.css?v=moji-48" />
+  </head>
+  <body>
+    <main class="journal-shell">
+      <article class="journal-page">
+        <header class="journal-header">
+          <div class="date-block">
+            <div class="day-number" id="dateDay">14</div>
+            <div class="date-meta">
+              <span id="dateMonth">六月</span>
+              <span id="dateYear">二〇二六年</span>
+            </div>
+          </div>
+          <div class="header-side">
+            <p id="dateLine"></p>
+            <input id="entryDate" type="date" />
+            <div class="header-actions">
+              <button id="resetBtn" title="恢复示例数据" aria-label="恢复示例数据">↺</button>
+              <button id="todayTemplateBtn">新建今日</button>
+              <button id="exportBtn">导出记录</button>
+              <button id="imageBtn">生成墨记图片</button>
+            </div>
+          </div>
+        </header>
+
+        <section class="photo-frame">
+          <div class="photo-inner">
+            <div class="photo-copy">
+              <span>今日照片 / 状态</span>
+              <textarea id="photoNote" rows="2" placeholder="写下今天照片里的状态或一句提醒"></textarea>
+            </div>
+            <div class="photo-grid" id="photoGrid"></div>
+            <label class="photo-upload">
+              <input id="photoInput" type="file" accept="image/*" multiple />
+              <span>添加照片</span>
+            </label>
+          </div>
+        </section>
+
+        <div id="planSections"></div>
+
+        <section class="diary-section">
+          <h2>今日任务</h2>
+          <div class="leaf-divider"></div>
+          <label class="field">
+            <span>今天最重要的 3-5 件事</span>
+            <textarea id="todayTasks" rows="5" placeholder="1.&#10;2.&#10;3."></textarea>
+          </label>
+
+        </section>
+
+        <section class="diary-section">
+          <h2>昨日计划</h2>
+          <div class="leaf-divider"></div>
+          <label class="field">
+            <span>实际完成</span>
+            <textarea id="doneText" rows="4" placeholder="写下昨天/今天真正完成了什么"></textarea>
+          </label>
+          <label class="field compact-field">
+            <span>昨日总结</span>
+            <textarea id="yesterdaySummary" rows="2" placeholder="写下昨天真正学到、感受到、需要调整的地方"></textarea>
+          </label>
+        </section>
+
+        <section class="diary-section generated-section" id="generatedSection" hidden>
+          <h2>墨记长图预览</h2>
+          <div class="leaf-divider"></div>
+          <img id="generatedImage" alt="生成的墨记日记长图" />
+          <p>手机上可以长按图片保存，再添加到墨记。</p>
+        </section>
+      </article>
+    </main>
+    <div class="toast" id="toast" role="status" aria-live="polite"></div>
+    <section class="moji-export" id="mojiExport" aria-hidden="true"></section>
+
+    <script src="./app.js?v=moji-48"></script>
+  </body>
+</html>
