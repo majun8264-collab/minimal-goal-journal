@@ -1,9 +1,9 @@
-const CACHE_NAME = "goal-journal-v49";
+const CACHE_NAME = "goal-journal-v50";
 const ASSETS = [
   "./",
   "./index.html",
-  "./styles.css?v=moji-49",
-  "./app.js?v=moji-49",
+  "./styles.css?v=moji-50",
+  "./app.js?v=moji-50",
   "./manifest.webmanifest",
   "./icon.svg",
 ];

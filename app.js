@@ -2,7 +2,7 @@ const STORAGE_KEY = "five-year-journal-v3";
 const TEMPLATE_DATE = "2026-03-17";
 const LATEST_DIARY_DATE = "2026-07-02";
 const LATEST_DIARY_IMPORT = "clean-pwa-v1";
-const LATEST_APP_VERSION = "moji-49";
+const LATEST_APP_VERSION = "moji-50";
 const IMAGE_MAX_SIZE = 1200;
 
 const defaultState = {
@@ -213,6 +213,7 @@ function getEntry(date) {
     state.entries[date] = {
       photos: [],
       photoNote: "",
+      pending: "",
       tasks: "",
       done: "",
       progress: 50,
@@ -229,6 +230,7 @@ function getEntry(date) {
 
 function normalizeEntry(entry) {
   if (typeof entry.photoNote !== "string") entry.photoNote = "";
+  if (typeof entry.pending !== "string") entry.pending = "";
   if (!Array.isArray(entry.taskStatuses)) entry.taskStatuses = [];
   if (!Array.isArray(entry.doneStatuses)) entry.doneStatuses = [];
   if (typeof entry.yesterdaySummary !== "string") entry.yesterdaySummary = extractYesterdaySummary(entry.done);
@@ -477,6 +479,7 @@ function renderDailyForm() {
   syncDoneStatuses(entry);
   $("#entryDate").value = activeDate;
   $("#photoNote").value = entry.photoNote;
+  $("#pendingItems").value = entry.pending;
   $("#todayTasks").value = entry.tasks;
   $("#doneText").value = entry.done;
   if ($("#yesterdaySummary")) $("#yesterdaySummary").value = entry.yesterdaySummary || "";
@@ -570,6 +573,7 @@ function bindDailyForm() {
 
   const mapping = [
     ["photoNote", "photoNote"],
+    ["pendingItems", "pending"],
     ["todayTasks", "tasks"],
     ["doneText", "done"],
     ["yesterdaySummary", "yesterdaySummary"],
@@ -691,7 +695,7 @@ function calculateStreak() {
     const key = cursor.toISOString().slice(0, 10);
     const entry = state.entries[key];
     if (!entry) break;
-    const hasContent = [entry.tasks, entry.done, entry.yesterdaySummary, entry.reflection].some((value) =>
+    const hasContent = [entry.pending, entry.tasks, entry.done, entry.yesterdaySummary, entry.reflection].some((value) =>
       String(value || "").trim(),
     );
     if (!hasContent) break;
@@ -754,7 +758,7 @@ function exportRecords() {
 function hasEntryContent(entry) {
   return Boolean(
     entry &&
-      [entry.tasks, entry.done, entry.yesterdaySummary, entry.reflection, entry.photoNote].some((value) =>
+      [entry.pending, entry.tasks, entry.done, entry.yesterdaySummary, entry.reflection, entry.photoNote].some((value) =>
         String(value || "").trim(),
       ),
   );
@@ -775,6 +779,7 @@ function createEntryFromTemplate(sourceDate, targetDate, { askBeforeOverwrite = 
   state.entries[targetDate] = {
     photos: [],
     photoNote: "",
+    pending: source.pending || "",
     tasks: "",
     done: source.tasks || "",
     progress: 50,
@@ -880,6 +885,7 @@ async function renderMojiCanvas() {
   state.planSections.forEach((section) => {
   y = drawPlanSection(ctx, section, y, width);
   });
+  y = drawPendingSection(ctx, entry, y, width);
   y = drawTaskSection(ctx, entry, y, width);
   y = drawDoneSection(ctx, entry, y, width);
   y = drawTextSection(ctx, "昨日总结", entry.yesterdaySummary || "待补充", y, width);
@@ -950,6 +956,10 @@ function drawTextSection(ctx, title, text, y, width) {
 
 function drawTaskSection(ctx, entry, y, width) {
   return drawTextSection(ctx, "今日任务", entry.tasks || "1.\n2.\n3.", y, width);
+}
+
+function drawPendingSection(ctx, entry, y, width) {
+  return drawTextSection(ctx, "待完成事项", entry.pending || "待补充", y, width);
 }
 
 function drawDoneSection(ctx, entry, y, width) {
@@ -1170,6 +1180,10 @@ function buildMojiCardHTML() {
         </div>
       </header>
       ${buildMojiPhotos(entry)}
+      <section class="moji-section">
+        <h2>待完成事项</h2>
+        ${paragraphBlock(entry.pending || "待补充")}
+      </section>
       <section class="moji-section">
         <h2>今日任务</h2>
         ${paragraphBlock(entry.tasks || "1.\\n2.\\n3.")}

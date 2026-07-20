@@ -6,7 +6,7 @@
     <title>极简目标日记</title>
     <meta name="theme-color" content="#f3eee4" />
     <link rel="manifest" href="./manifest.webmanifest" />
-    <link rel="stylesheet" href="./styles.css?v=moji-49" />
+    <link rel="stylesheet" href="./styles.css?v=moji-50" />
   </head>
   <body>
     <main class="journal-shell">
@@ -49,6 +49,15 @@
         <div id="planSections"></div>
 
         <section class="diary-section">
+          <h2>待完成事项</h2>
+          <div class="leaf-divider"></div>
+          <label class="field">
+            <span>暂时不放进今日任务，但需要持续提醒的事</span>
+            <textarea id="pendingItems" rows="4" placeholder="1.&#10;2.&#10;3."></textarea>
+          </label>
+        </section>
+
+        <section class="diary-section">
           <h2>今日任务</h2>
           <div class="leaf-divider"></div>
           <label class="field">
@@ -82,6 +91,6 @@
     <div class="toast" id="toast" role="status" aria-live="polite"></div>
     <section class="moji-export" id="mojiExport" aria-hidden="true"></section>
 
-    <script src="./app.js?v=moji-49"></script>
+    <script src="./app.js?v=moji-50"></script>
   </body>
 </html>
