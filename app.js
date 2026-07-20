@@ -2,7 +2,7 @@ const STORAGE_KEY = "five-year-journal-v3";
 const TEMPLATE_DATE = "2026-03-17";
 const LATEST_DIARY_DATE = "2026-07-02";
 const LATEST_DIARY_IMPORT = "clean-pwa-v1";
-const LATEST_APP_VERSION = "moji-48";
+const LATEST_APP_VERSION = "moji-49";
 const IMAGE_MAX_SIZE = 1200;
 
 const defaultState = {
@@ -1306,6 +1306,12 @@ function showToast(message) {
   showToast.timer = window.setTimeout(() => toast.classList.remove("show"), 2200);
 }
 
+function finishEntry() {
+  saveState();
+  document.activeElement?.blur?.();
+  showToast("今日已保存");
+}
+
 function resetDemo() {
   if (!confirm("要恢复成示例数据吗？当前本地记录会被清空。")) return;
   state = structuredClone(defaultState);
@@ -1326,6 +1332,7 @@ function boot() {
   }
   bindDailyForm();
   $("#todayTemplateBtn").addEventListener("click", createTodayFromCurrentTemplate);
+  $("#finishBtn").addEventListener("click", finishEntry);
   $("#exportBtn").addEventListener("click", exportRecords);
   $("#imageBtn").addEventListener("click", generateMojiImage);
   $("#resetBtn").addEventListener("click", resetDemo);

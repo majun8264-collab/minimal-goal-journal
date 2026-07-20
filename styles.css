@@ -125,6 +125,13 @@ p {
   padding: 0 12px;
 }
 
+.header-actions .finish-btn {
+  border-color: var(--accent);
+  background: var(--accent);
+  color: #fffdf8;
+  font-weight: 700;
+}
+
 .field span,
 .progress-editor span {
   color: var(--muted);
