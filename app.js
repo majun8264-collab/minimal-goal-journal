@@ -383,7 +383,6 @@ function renderPlanSections() {
         ${
           hasKeyResultRecord
             ? `<label class="key-result-document">
-                 <span>关键结果记录</span>
                  <textarea class="key-result-note" rows="1" placeholder="记录具体数据、完成情况、下一步">${escapeHTML(item.note || "")}</textarea>
                </label>`
             : ""
@@ -994,7 +993,7 @@ function drawPlanSection(ctx, section, y, width) {
     const textMaxWidth = statusMode ? w - 74 : w - 28;
     const textHeight = measureWrappedText(ctx, item.text, textMaxWidth, 21);
     const note = String(item.note || "").trim();
-    const noteHeight = hasKeyResultRecord && note ? measureWrappedText(ctx, `关键结果记录：${note}`, w - 28, 20) + 8 : 0;
+    const noteHeight = hasKeyResultRecord && note ? measureWrappedText(ctx, note, w - 28, 20) + 8 : 0;
     return { item, height: Math.max(42, textHeight + 20 + noteHeight), textHeight, noteHeight };
   });
   const h = headHeight + rows.reduce((sum, row) => sum + row.height + rowGap, 0) + 4;
@@ -1024,7 +1023,7 @@ function drawPlanSection(ctx, section, y, width) {
       if (note) {
         ctx.fillStyle = "#80766a";
         ctx.font = "13px -apple-system, BlinkMacSystemFont, PingFang SC, sans-serif";
-        drawWrappedText(ctx, `关键结果记录：${note}`, x + 14, rowY + textHeight + 18, w - 28, 20);
+        drawWrappedText(ctx, note, x + 14, rowY + textHeight + 18, w - 28, 20);
       }
     }
     line(ctx, x + 14, rowY + height + 3, x + w - 14, rowY + height + 3, "#eee5da");

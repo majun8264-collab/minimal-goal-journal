@@ -459,14 +459,7 @@ p {
 
 .key-result-document {
   display: grid;
-  gap: 4px;
-  margin-top: 8px;
-}
-
-.key-result-document span {
-  color: var(--muted);
-  font-size: 13px;
-  font-weight: 700;
+  margin-top: 6px;
 }
 
 .key-result-note {
