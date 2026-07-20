@@ -1,15 +1,16 @@
-const CACHE_NAME = "goal-journal-v48";
+const CACHE_NAME = "goal-journal-v49";
 const ASSETS = [
   "./",
   "./index.html",
-  "./styles.css?v=moji-48",
-  "./app.js?v=moji-48",
+  "./styles.css?v=moji-49",
+  "./app.js?v=moji-49",
   "./manifest.webmanifest",
   "./icon.svg",
 ];
 
 self.addEventListener("install", (event) => {
   event.waitUntil(caches.open(CACHE_NAME).then((cache) => cache.addAll(ASSETS)));
+  self.skipWaiting();
 });
 
 self.addEventListener("activate", (event) => {
@@ -18,6 +19,7 @@ self.addEventListener("activate", (event) => {
       .keys()
       .then((keys) => Promise.all(keys.filter((key) => key !== CACHE_NAME).map((key) => caches.delete(key)))),
   );
+  self.clients.claim();
 });
 
 self.addEventListener("fetch", (event) => {
